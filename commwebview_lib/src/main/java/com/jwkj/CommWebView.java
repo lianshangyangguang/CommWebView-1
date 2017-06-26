@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-
-import com.hdl.elog.ELog;
 
 
 /**
@@ -76,15 +73,12 @@ public class CommWebView extends LinearLayout {
         webview.setWebViewClient(new WebViewClient() {//设置webviewclient,使其不会由第三方浏览器打开新的url
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                ELog.e("开始新的url了");
                 loadWebUrl(url);
                 return true;//设置为true才有效哦
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                ELog.e("开始加载了");
-
                 if (callback != null) {
                     callback.onStart();
                 }
@@ -93,14 +87,12 @@ public class CommWebView extends LinearLayout {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                ELog.e("加载完成了");
                 webTitle = view.getTitle();
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                ELog.e("加载");
                 loadWebUrl(KEY_DEFAULT_ERROR_URL);
                 if (callback != null) {
                     callback.onError(errorCode, description, failingUrl);
@@ -202,11 +194,6 @@ public class CommWebView extends LinearLayout {
     }
 
     public String getWebTitle() {
-        if (TextUtils.isEmpty(webTitle)) {
-            ELog.e("为空了");
-        } else {
-            ELog.e(webTitle);
-        }
         return webTitle;
     }
 
@@ -255,7 +242,6 @@ public class CommWebView extends LinearLayout {
      * 刷新
      */
     public void refresh() {
-        loadWebUrl("https://www.baidu.com");
-//        webview.reload();
+        loadWebUrl(curWebUrl);
     }
 }
