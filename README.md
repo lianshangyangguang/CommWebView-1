@@ -8,7 +8,7 @@
 app/gradle中加入依赖
 
 ```java
-compile 'com.jwkj:commwebview:v1.0.2'
+compile 'com.jwkj:commwebview:v1.0.5'
 ````
 
 ## 用法
